@@ -1,7 +1,8 @@
 pipeline {
     agent any
     environment {
-        SONAR_TOKEN = credentials('SONAR_TOKEN') 
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
+        SNYK_TOKEN = credentials('SNYK_TOKEN')
     }
     stages {
         stage('Checkout') {
@@ -29,6 +30,12 @@ pipeline {
                 bat 'npm audit || exit /b 0'
             }
         }
+        stage('Snyk Security Scan') {
+            steps {
+                // Set token and run Snyk test
+                bat 'set SNYK_TOKEN=%SNYK_TOKEN% && snyk test'
+            }
+        }
         stage('SonarCloud Analysis') {
             steps {
                 bat 'C:\\sonar-scanner\\bin\\sonar-scanner.bat -D"sonar.login=%SONAR_TOKEN%"'
@@ -36,4 +43,3 @@ pipeline {
         }
     }
 }
-
