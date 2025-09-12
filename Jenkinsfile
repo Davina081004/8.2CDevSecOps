@@ -1,31 +1,42 @@
 pipeline {
- agent any
- stages {
- stage('Checkout') {
- steps {
- git branch: 'main', url: ' https://github.com/Davina081004/8.2CDevSecOps.git'
- }
- }
- stage('Install Dependencies') {
- steps {
- sh 'npm install'
- }
- }
- stage('Run Tests') {
- steps {
- sh 'npm test || true' // Allows pipeline to continue despite test failures
- }
- }
- stage('Generate Coverage Report') {
- steps {
- // Ensure coverage report exists
- sh 'npm run coverage || true'
- }
- }
- stage('NPM Audit (Security Scan)') {
- steps {
- sh 'npm audit || true' // This will show known CVEs in the output
- }
- }
- }
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                // Checkout your repo
+                git branch: 'main', url: 'https://github.com/Davina081004/8.2CDevSecOps.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install npm dependencies
+                bat 'npm install'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                // Run tests; continue even if they fail
+                bat 'npm test || exit /b 0'
+            }
+        }
+
+        stage('Generate Coverage Report') {
+            steps {
+                // Generate coverage report; continue even if it fails
+                bat 'npm run coverage || exit /b 0'
+            }
+        }
+
+        stage('NPM Audit (Security Scan)') {
+            steps {
+                // Run security audit; continue even if there are issues
+                bat 'npm audit || exit /b 0'
+            }
+        }
+    }
 }
+
