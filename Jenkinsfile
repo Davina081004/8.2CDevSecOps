@@ -10,13 +10,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npm test || true'
+                bat 'npm test || exit 0'
             }
             post {
                 always {
@@ -42,7 +42,7 @@ Jenkins
 
         stage('Security Scan') {
             steps {
-                sh 'npm audit || true'
+                bat 'npm audit || exit 0'
             }
             post {
                 always {
@@ -68,9 +68,8 @@ Jenkins
 
         stage('Generate Coverage Report') {
             steps {
-                sh 'npm run coverage || true'
+                bat 'npm run coverage || exit 0'
             }
         }
     }
 }
-
