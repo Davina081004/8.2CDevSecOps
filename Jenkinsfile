@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                // Checkout your repo
+                // Checkout your repository
                 git branch: 'main', url: 'https://github.com/Davina081004/8.2CDevSecOps.git'
             }
         }
@@ -31,11 +31,17 @@ pipeline {
             }
         }
 
-        stage('NPM Audit (Security Scan)') {
+        stage('NPM Audit (Vulnerability Scan)') {
             steps {
-                // Run security audit; continue even if there are issues
+                // Run security audit; continue even if there are vulnerabilities
                 bat 'npm audit || exit /b 0'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
         }
     }
 }
