@@ -48,18 +48,9 @@ Jenkins
                 always {
                     emailext(
                         to: 'davinawong1008@gmail.com',
-                        subject: "Security Scan - Build ${currentBuild.currentResult}",
-                        body: """\
-Hello,
+                        subject: "Security Scan - Build,",
+                        body: "",
 
-The **Security Scan** stage for build ${env.BUILD_NUMBER} has completed.
-Build Status: ${currentBuild.currentResult}
-
-Attached are the logs for this stage.
-
-Thanks,
-Jenkins
-""",
                         attachLog: true
                     )
                 }
