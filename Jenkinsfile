@@ -47,7 +47,7 @@ Jenkins
             post {
                 always {
                     emailext(
-                        to: 'davinawong1008@gmail.com',
+                        to: 'davinaezra59@gmail.com',
                         subject: "Security Scan - Build,",
                         body: "",
 
